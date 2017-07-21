@@ -101,7 +101,9 @@ Try {
 
     Write-Log "Info $name : Copy complete. Verifying size of dumped file $tmpDir"
     $wpFolder = (Get-ChildItem $tmpDir -Recurse | Measure-Object -Property Length -Sum)
-    $wpSize = "{0:N2}" -f ($wpFolder.sum / 1MB)
+    $wpSizeString = "{0:N0}" -f ($wpFolder.sum / 1MB)
+    [int]$wpSize = $wpSizeString -Replace "\s"
+    Write-Host $wpSize
 
     #Check if more than 50 Mb
     If($wpSize -gt 50) {
